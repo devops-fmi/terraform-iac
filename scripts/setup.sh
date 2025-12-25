@@ -48,7 +48,7 @@ create_s3_bucket() {
     
     echo -n "Creating S3 bucket: ${bucket_name}... "
     
-    if aws s3 ls "s3://${bucket_name}" 2>&1 | grep -q 'NoSuchBucket'; then
+    if ! aws s3api head-bucket --bucket "${bucket_name}" 2>/dev/null; then
         if [ "${AWS_REGION}" = "us-east-1" ]; then
             aws s3api create-bucket \
                 --bucket "${bucket_name}" \

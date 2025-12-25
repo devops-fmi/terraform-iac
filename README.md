@@ -232,6 +232,19 @@ The Terraform configuration creates an IAM role with:
 - **Permissions**: AdministratorAccess (required for full infrastructure management)
 - **Usage**: Automatically assumed by GitHub Actions workflows
 
+**Security Note**: The GitHub Actions role uses `AdministratorAccess` for initial setup and full infrastructure management. For production environments with stricter security requirements, consider:
+1. Creating a custom IAM policy with only the necessary permissions for EKS, VPC, IAM, and related services
+2. Restricting the OIDC trust relationship to specific branches (e.g., only `main`)
+3. Implementing additional approval workflows for production deployments
+4. Regularly auditing CloudTrail logs for role usage
+
+To use a more restrictive policy, replace the `AdministratorAccess` attachment in `main.tf` with a custom policy that includes:
+- EKS cluster and node group management
+- VPC, subnet, and networking resources
+- IAM role and policy creation for EKS
+- EC2 and Auto Scaling permissions
+- CloudWatch logging permissions
+
 ## 📊 Outputs
 
 After applying, Terraform provides:
