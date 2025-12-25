@@ -37,7 +37,30 @@ cd terraform-iac
 
 ### 2. Create S3 Backend and DynamoDB Table
 
-Before running Terraform, create the S3 buckets and DynamoDB tables for state management:
+Before running Terraform, create the S3 buckets and DynamoDB tables for state management.
+
+#### Option 1: Using the Setup Script (Recommended)
+
+The easiest way is to use the provided setup script, which creates all necessary resources with proper configuration:
+
+```bash
+# Make the script executable (if not already)
+chmod +x scripts/setup.sh
+
+# Run the setup script
+./scripts/setup.sh
+```
+
+The script will:
+- Create S3 buckets for all environments (dev, staging, prod)
+- Enable versioning and encryption on buckets
+- Block public access on buckets
+- Create DynamoDB tables for state locking
+- Use pay-per-request billing mode for cost efficiency
+
+#### Option 2: Manual Setup
+
+If you prefer to create resources manually or need to customize:
 
 ```bash
 # Create S3 bucket for dev environment
@@ -50,15 +73,27 @@ aws s3api put-bucket-versioning \
   --bucket terraform-state-eks-dev \
   --versioning-configuration Status=Enabled
 
-# Create DynamoDB table for state locking
+# Enable encryption
+aws s3api put-bucket-encryption \
+  --bucket terraform-state-eks-dev \
+  --server-side-encryption-configuration '{
+    "Rules": [{
+      "ApplyServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+      },
+      "BucketKeyEnabled": true
+    }]
+  }'
+
+# Create DynamoDB table for state locking (pay-per-request billing)
 aws dynamodb create-table \
   --table-name terraform-state-lock-eks-dev \
   --attribute-definitions AttributeName=LockID,AttributeType=S \
   --key-schema AttributeName=LockID,KeyType=HASH \
-  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+  --billing-mode PAY_PER_REQUEST \
   --region us-east-1
 
-# Repeat for staging and prod environments
+# Repeat for staging and prod environments with appropriate names
 ```
 
 ### 3. Initialize Terraform
