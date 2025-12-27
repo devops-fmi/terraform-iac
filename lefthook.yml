@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - run: terraform fmt -recursive
+      glob: "*.{tf, tfvars, hcl}"
+      stage_fixed: true
