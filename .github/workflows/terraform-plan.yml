@@ -10,6 +10,7 @@ on:
       - ".github/workflows/terraform-*.yml"
 
 permissions:
+  id-token: write
   contents: read
   pull-requests: write
 
