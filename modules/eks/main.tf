@@ -73,7 +73,7 @@ resource "aws_eks_node_group" "eks-worker-node" {
     desired_size = each.value.scaling_config.desired_size
     min_size     = each.value.scaling_config.min_size
     max_size     = each.value.scaling_config.max_size
-   
+
   }
 
   depends_on = [

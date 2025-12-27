@@ -5,7 +5,7 @@ terraform {
       version = "~> 6.25.0"
     }
   }
-  
+
   backend "s3" {
     bucket       = "elibrary-terraform-state-bucket"
     key          = "dev/terraform-state"
