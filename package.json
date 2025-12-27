@@ -1,0 +1,7 @@
+{
+  "name": "terraform-iac",
+  "private": true,
+  "devDependencies": {
+    "lefthook": "^2.0.13"
+  }
+}
