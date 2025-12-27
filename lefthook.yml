@@ -4,3 +4,10 @@ pre-commit:
     - run: terraform fmt -recursive
       glob: "*.{tf, tfvars, hcl}"
       stage_fixed: true
+    
+    - run: terraform validate -no-color
+      glob: "*.{tf, tfvars, hcl}"
+
+    - run: bunx prettier --write
+      glob: "*.{py, js, json, yml, yaml, md}"
+      stage_fixed: true
