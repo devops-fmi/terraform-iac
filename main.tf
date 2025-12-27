@@ -14,7 +14,7 @@ terraform {
     use_lockfile = true # Enable state locking via native file lock
   }
 
-  required_version = ">= 1.2"
+  required_version = ">= 1.14"
 }
 
 
