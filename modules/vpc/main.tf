@@ -59,28 +59,31 @@ resource "aws_nat_gateway" "nat_gw" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.eks_vpc.id
 
-  route = {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.eks_vpc_internet_gw.id
-  }
-
   tags = {
     Name = "${var.eks_cluster_name}-public-route-table"
   }
+}
+
+resource "aws_route" "public_route" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.eks_vpc_internet_gw.id
 }
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.eks_vpc.id
   count  = length(var.private_subnet_cidr)
 
-  route = {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[count.index].id
-  }
-
   tags = {
     Name = "${var.eks_cluster_name}-private-route-table-${count.index + 1}"
   }
+}
+
+resource "aws_route" "private_route" {
+  count              = length(var.private_subnet_cidr)
+  route_table_id     = aws_route_table.private[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id     = aws_nat_gateway.nat_gw[count.index].id
 }
 
 resource "aws_route_table_association" "public_assoc" {
