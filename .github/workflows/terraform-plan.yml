@@ -44,10 +44,10 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
 
-      - name: Plan
+      - name: Terraform Plan
         run: terraform plan -out .planfile
 
-      - name: Post PR comment
+      - name: Upload PR comment
         uses: borchero/terraform-plan-comment@v2.6.0
         with:
           token: ${{ github.token }}
