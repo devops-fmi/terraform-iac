@@ -10,6 +10,17 @@ eks_cluster_name = "elibrary-fmi-devops-eks-cluster"
 cluster_version = "1.34"
 
 node_groups = {
+  argocd = {
+    instance_types = ["t3.small"]
+    capacity_type  = "ON_DEMAND"
+
+    scaling_config = {
+      desired_size = 1
+      max_size     = 1
+      min_size     = 1
+    }
+  },
+
   general = {
     instance_types = ["t3.small"]
     capacity_type  = "ON_DEMAND"
@@ -17,7 +28,7 @@ node_groups = {
     scaling_config = {
       desired_size = 2
       max_size     = 4
-      min_size     = 1
+      min_size     = 2
     }
   }
 }
