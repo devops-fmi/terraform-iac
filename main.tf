@@ -33,6 +33,17 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
 }
 
+provider "aws" {
+  region = var.region
+
+  default_tags {
+    tags = {
+      ManagedBy = "Terraform"
+      Project   = "elibrary-fmi-devops-course"
+    }
+  }
+}
+
 provider "helm" {
   kubernetes {
     host                   = data.aws_eks_cluster.cluster.endpoint
