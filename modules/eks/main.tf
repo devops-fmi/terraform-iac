@@ -85,7 +85,7 @@ resource "aws_eks_node_group" "eks-worker-node" {
     content {
       key    = "workload"
       value  = "argocd"
-      effect = "NO_SCHEDULE"
+      effect = "NoSchedule"
     }
   }
 
