@@ -7,8 +7,8 @@ aws eks update-kubeconfig --region eu-central-1 --name elibrary-fmi-devops-eks-c
 echo ""
 
 echo "Creating ArgoCD namespace"
-kubectl create namespace argocd
+kubectl get namespace argocd || kubectl create namespace argocd
 echo ""
 
 echo "Installing ArgoCD..."
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.3/manifests/install.yaml
