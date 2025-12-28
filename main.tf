@@ -17,15 +17,6 @@ terraform {
   required_version = ">= 1.14"
 }
 
-# Backend S3 bucket - prevents accidental destruction
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "elibrary-terraform-state-bucket"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 provider "aws" {
   region = var.region
 
