@@ -80,3 +80,19 @@ resource "aws_eks_node_group" "eks-worker-node" {
     aws_iam_role_policy_attachment.eks_node_policy
   ]
 }
+
+resource "aws_eks_access_entry" "cli_root" {
+  cluster_name      = aws_eks_cluster.main-eks-cluster.name
+  principal_arn     = "arn:aws:iam::607402046977:user/cli-root"
+  kubernetes_groups = []
+  type              = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "cli_root_admin" {
+  cluster_name  = aws_eks_cluster.main-eks-cluster.name
+  principal_arn = "arn:aws:iam::607402046977:user/cli-root"
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  access_scope {
+    type = "cluster"
+  }
+}
