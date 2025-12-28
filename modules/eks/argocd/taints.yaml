@@ -1,0 +1,41 @@
+# ArgoCD Node Group Taints Configuration
+# This file documents the taints applied to the argocd node group
+# to ensure only ArgoCD workloads are scheduled on these nodes
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-taints-config
+  namespace: argocd
+data:
+  taints: |
+    # Taint applied to argocd node group in Terraform
+    - key: workload
+      value: argocd
+      effect: NoSchedule
+    
+    # Description:
+    # - key: "workload" - The taint key for workload isolation
+    # - value: "argocd" - The taint value identifying ArgoCD workloads
+    # - effect: "NoSchedule" - Prevents pods without matching tolerations from being scheduled
+    
+    # This ensures:
+    # 1. ArgoCD pods with matching tolerations can ONLY run on argocd nodes
+    # 2. Other workloads cannot run on argocd nodes (they will be rejected)
+    # 3. Complete workload isolation and resource guarantee for ArgoCD
+
+  tolerations: |
+    # All ArgoCD Helm chart components have tolerations for the above taint
+    # Applied to the following components via values.yaml:
+    - argocd-server
+    - argocd-repo-server
+    - argocd-applicationset-controller
+    - argocd-controller
+    - redis
+    
+    # Tolerance configuration used in values.yaml:
+    # tolerations:
+    #   - key: workload
+    #     operator: Equal
+    #     value: argocd
+    #     effect: NoSchedule

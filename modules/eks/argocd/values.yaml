@@ -1,0 +1,50 @@
+server:
+  service:
+    type: LoadBalancer
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: workload
+      operator: Equal
+      value: argocd
+      effect: NoSchedule
+
+repoServer:
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: workload
+      operator: Equal
+      value: argocd
+      effect: NoSchedule
+
+applicationSet:
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: workload
+      operator: Equal
+      value: argocd
+      effect: NoSchedule
+
+controller:
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: workload
+      operator: Equal
+      value: argocd
+      effect: NoSchedule
+
+redis:
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: workload
+      operator: Equal
+      value: argocd
+      effect: NoSchedule
+
+configs:
+  secret:
+    argocdServerAdminPassword: ""
