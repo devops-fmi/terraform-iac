@@ -76,6 +76,10 @@ resource "aws_eks_node_group" "eks-worker-node" {
 
   }
 
+  labels = each.key == "argocd" ? {
+    "workload" = "argocd"
+  } : {}
+
   dynamic "taint" {
     for_each = each.key == "argocd" ? [1] : []
     content {

@@ -2,7 +2,7 @@ server:
   service:
     type: LoadBalancer
   nodeSelector:
-    kubernetes.io/os: linux
+    workload: argocd
   tolerations:
     - key: workload
       operator: Equal
@@ -11,7 +11,7 @@ server:
 
 repoServer:
   nodeSelector:
-    kubernetes.io/os: linux
+    workload: argocd
   tolerations:
     - key: workload
       operator: Equal
@@ -20,7 +20,7 @@ repoServer:
 
 applicationSet:
   nodeSelector:
-    kubernetes.io/os: linux
+    workload: argocd
   tolerations:
     - key: workload
       operator: Equal
@@ -29,7 +29,7 @@ applicationSet:
 
 controller:
   nodeSelector:
-    kubernetes.io/os: linux
+    workload: argocd
   tolerations:
     - key: workload
       operator: Equal
@@ -38,7 +38,7 @@ controller:
 
 redis:
   nodeSelector:
-    kubernetes.io/os: linux
+    workload: argocd
   tolerations:
     - key: workload
       operator: Equal
@@ -47,4 +47,4 @@ redis:
 
 configs:
   secret:
-    argocdServerAdminPassword: "$$2y$10$VttJmtPYjd8vfDXfP8pZ2.2NcZw7NhE2qnKD0TuAws.Yw1rEADPLy"  # password: admin
+    argocdInitialAdminSecret: "$$2y$10$VttJmtPYjd8vfDXfP8pZ2.2NcZw7NhE2qnKD0TuAws.Yw1rEADPLy"  # password: admin
