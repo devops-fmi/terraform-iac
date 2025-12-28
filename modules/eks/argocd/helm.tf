@@ -28,6 +28,7 @@ resource "helm_release" "argocd" {
   namespace        = kubernetes_namespace.argocd.metadata[0].name
   version          = "7.6.1"
   create_namespace = true
+  force_update     = true
 
   values = [
     file("${path.module}/values.yaml")
