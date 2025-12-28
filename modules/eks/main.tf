@@ -76,6 +76,15 @@ resource "aws_eks_node_group" "eks-worker-node" {
 
   }
 
+  dynamic "taint" {
+    for_each = each.key == "argocd" ? [1] : []
+    content {
+      key    = "workload"
+      value  = "argocd"
+      effect = "NO_SCHEDULE"
+    }
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.eks_node_policy
   ]
