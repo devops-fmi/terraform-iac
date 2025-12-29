@@ -92,3 +92,10 @@ module "argocd" {
     kubernetes = kubernetes
   }
 }
+
+module "ecr" {
+  source = "./modules/ecr"
+
+  repository_name = "elibrary-fmi-ecr-image-repo"
+  region          = var.region
+}
