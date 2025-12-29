@@ -47,4 +47,4 @@ redis:
 
 configs:
   secret:
-    argocdInitialAdminSecret: "$$2y$10$VttJmtPYjd8vfDXfP8pZ2.2NcZw7NhE2qnKD0TuAws.Yw1rEADPLy"  # password: admin
+    argocd-initial-admin-secret: "$$2y$10$VttJmtPYjd8vfDXfP8pZ2.2NcZw7NhE2qnKD0TuAws.Yw1rEADPLy"  # password: admin
